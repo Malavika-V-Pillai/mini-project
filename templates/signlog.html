@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+   <body>
+   
+      <h1>welcome</h1>
+      
+      {% if error %}
+      <p><strong>Error:</strong> {{ error }}
+      {% endif %}
+      
+      <form id = "login" action = "home" method = post>
+         <dl>
+            <dt>email:</dt>
+            
+            <dd>
+               <input type = text name = email 
+                  value = "{{request.form.email }}">
+            </dd>
+            
+            <dt>Password:</dt>
+            <dd><input type = password name = password></dd>
+         </dl>
+         <p><input type = submit name = login value = Login></p>
+      </form>
+      <div id = "sign up">
+      <form id = "sign up" action = '/home' method = post>
+         <dl>
+            <dt>name:</dt>
+            <dd>
+               <input type = text name = name >
+            </dd>
+             <dt>email:</dt>
+            <dd>
+               <input type = text name = email >
+            </dd>
+            
+            <dt>Password:</dt>
+            <dd><input type = password name = password></dd>
+             <dt>Confirm Password:</dt>
+            <dd><input type = password name = confirm_password></dd>
+         </dl>
+         <p><input type = submit name = signup value = Signup></p>
+      </form>
+   </div>
+   </body>
+</html>
