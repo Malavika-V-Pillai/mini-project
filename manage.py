@@ -4,11 +4,9 @@ app = Flask(__name__)
 
 ''' welcome link'''
 @app.route('/login')
-def signlog():
-	if em in session:
-		em = session['em']
-		return render_template('home.html')
-	return render_template("login.html")
+def home():
+	
+	return render_template("home.html")
 ''' main page link'''
 @app.route("/addbook")
 def addbook():
@@ -97,7 +95,10 @@ def book():
 				conn.commit();
 				msg = "Book added"
 				return render_template('profile.html', msg = msg)
-
+		except:
+			conn.rollback()
+		finally:
+			conn.close()
 
 @app.route('/logout')
 def logout():
