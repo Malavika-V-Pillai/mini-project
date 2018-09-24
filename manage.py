@@ -99,6 +99,21 @@ def book():
 			conn.rollback()
 		finally:
 			conn.close()
+''' For searching a book in textbox of homepage'''
+@app.route('/search')
+def search():
+	if request.method == "POST":
+		searchBook = request.form['searchBook']
+		conn = sqlite3.connection(book.db)
+		cur = conn.cursor()
+		cur.execute("SELECT * FROM BOOK WHERE BOOKNAME = ?",(searchBook))
+		searchRes = cur.fetchall()
+		if not searchRes:
+			msg = "No results found :("
+			return render_template("home.html",msg)
+		else:
+			listlength = str(len(searchRes))
+			msg = listlength + " books found" 
 
 @app.route('/logout')
 def logout():
