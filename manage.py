@@ -4,17 +4,17 @@ app = Flask(__name__)
 app.secret_key = 'any random string'
 
 ''' welcome link'''
-@app.route('/home',defaults={'bookid': ""})
+@app.route('/home',defaults={'bookname': ""})
 
-@app.route('/home/<bookid>')
-def home(bookid):
-	if bookid == "":
+@app.route('/home/<bookname>')
+def home(bookname):
+	if bookname == "":
 		return render_template('home.html')
 	else:
 
 		conn = sqlite3.connect('book.db')
 		cur = conn.cursor()
-		cur.execute("SELECT  * from edubook, ficbook, nficbook where edubook.bookid = ? or ficbook.bookid = ? or nficbook.bookid =?",(bookid,bookid,bookid))
+		cur.execute("SELECT  * from book where id =?",(bookname))
 		ReqBook = cur.fetchall()
 		conn.close()
 		return render_template("home.html",ReqBook = ReqBook)
