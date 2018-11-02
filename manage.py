@@ -4,7 +4,7 @@ app = Flask(__name__)
 app.secret_key = 'any random string'
 
 ''' welcome link'''
-@app.route('/home',defaults={'bookname': ""})
+#@app.route('/home',defaults={'bookname': ""})
 
 @app.route('/home/<bookname>')
 def home(bookname):
@@ -14,7 +14,7 @@ def home(bookname):
 
 		conn = sqlite3.connect('book.db')
 		cur = conn.cursor()
-		cur.execute("SELECT  * from book where id =?",(bookname))
+		cur.execute("SELECT  * from book where name =?",(bookname,))
 		ReqBook = cur.fetchall()
 		conn.close()
 		return render_template("home.html",ReqBook = ReqBook)
@@ -76,24 +76,25 @@ def book():
 		try:
 			conn = sqlite3.connect('book.db')
 			cur = conn.cursor()
-			if 'education' in form.request:
-				book_name = request.form['book_name']				
-				author = request.form['author']
-				price = request.form['price']
-				description = request.form['description']
-				booktype = request.form['booktype']
-				cur.execute("INSERT INTO edubook VALUES(?,?,?,?)",(book_name,author,price,description,booktype))
-				conn.commit();
-				msg = "Book added"
-				return render_template('profile.html', msg = msg)
+			#if 'education' in form.request:
+			book_name = request.form['book_name']				
+			author = request.form['author']
+			price = request.form['price']
+			description = request.form['description']
+			booktype = request.form['booktype']
+			genre = request.form['genre']
+			cur.execute("INSERT INTO edubook VALUES(?,?,?,?,?)",(book_name,author,price,description,booktype,genre))
+			conn.commit();
+			msg = "Book added"
+			return render_template('profile.html', msg = msg)
 
-			elif 'fiction' in form.request:
+			'''elif 'fiction' in form.request:
 				book_name = request.form['book_name']				
 				author = request.form['author']
 				price = request.form['price']
 				description = request.form['description']
 				booktype = request.form['booktype']
-				'''fictype for fiction type'''
+				
 				cur.execute("INSERT INTO ficbook VALUES(?,?,?,?)",(book_name,author,price,description,booktype))
 				conn.commit();
 				msg = "Book added"
@@ -106,11 +107,11 @@ def book():
 				price = request.form['price']
 				description = request.form['description']
 				booktype = request.form['booktype']
-				'''nfictype for non-fiction type'''
+				
 				cur.execute("INSERT INTO nficbook VALUES(?,?,?,?)",(book_name,author,price,description,booktype))
 				conn.commit();
 				msg = "Book added"
-				return render_template('profile.html', msg = msg)
+				return render_template('profile.html', msg = msg)'''
 		except:
 			conn.rollback()
 		finally:
@@ -122,20 +123,20 @@ def search():
 		searchBook = request.form['searchBook']
 		conn = sqlite3.connect('book.db')
 		cur = conn.cursor()
-		cur.execute("SELECT * FROM edubook WHERE edubook.bookname = ? ",(searchBook,))
-		edures= cur.fetchall()
-		cur.execute("SELECT * FROM ficbook WHERE ficbook.bookname = ? ",(searchBook,))
+		cur.execute("SELECT * FROM book WHERE name = ? ",(searchBook,))
+		res= cur.fetchall()
+		'''cur.execute("SELECT * FROM ficbook WHERE ficbook.bookname = ? ",(searchBook,))
 		ficres=cur.fetchall()
 		cur.execute("SELECT * FROM nficbook WHERE nficbook.bookname = ? ",(searchBook,))
-		nficres = cur.fetchall()
+		nficres = cur.fetchall()'''
 		
-		if len(edures) == 0 :
+		if len(res) == 0 :
 			msg = "No results found :("
 			return render_template("home.html",msg=msg)
 		else:
-			listlength = str(len(ficRes)+len(edures)+len(nficres))
+			listlength = str(len(res))
 			msg = listlength + " books found" 
-			return render_template('home.html', msg = msg,edures = edures)
+			return render_template('home.html', msg = msg, res = res)
 
 @app.route('/logout')
 def logout():

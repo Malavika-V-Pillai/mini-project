@@ -8,8 +8,9 @@
    <strong> {{ msg}} </strong>
    {% endif %}
 
-   {% for row in edures %} 
-  <a href = "/home/row['bookid']" ><strong> {{ row['bookname']}} </strong></a>
+   {% for row in res %} 
+  <!--<a href = "/home/row['bookid']" ><strong> {{ row['bookname']}} </strong></a>-->
+   {{ row['name']}}
    <strong> {{ row['price']}} </strong>
    {% endfor %} 
 
