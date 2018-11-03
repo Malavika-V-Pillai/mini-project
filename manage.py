@@ -18,8 +18,8 @@ def home(bookname = None, no = None):
 		'''elif(bookname != None and no = None):
 		cur.execute("SELECT  * from book where name =?",(bookname,))
 		ReqBook = cur.fetchall()
-		conn.close()'''
-		return render_template("home.html")
+		conn.close()
+		return render_template("home.html")'''
 	else:
 		#To dispaly full details of book
 		cur.execute("SELECT  * from book where no =?",(no,))
@@ -49,7 +49,7 @@ def addbook( ):
 		pswd = request.form['pswd']
 		phno = request.form['phno']
 		location = request.form['location']
-		cur.execute("INSERT INTO user VALUES(?,?,?,?,?,?)",(2,name,email,pswd,phno,location))
+		cur.execute("INSERT INTO user VALUES(?,?,?,?,?,?)",(4,name,email,pswd,phno,location))
 		conn.commit();
 		msg = "sign up successfull"
 		return render_template("profile.html", msg = msg, name = name)
