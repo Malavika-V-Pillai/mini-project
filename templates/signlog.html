@@ -2,23 +2,24 @@
 <html>
 <head>
 	<title>login</title>
+	<strong>{{ msg }}</strong>
 </head>
 <body>
-	login
+	<h1>login</h1>
 
 <form name = "login"action="/addbook" method = "post">
 	<input type = text name = "email">
 	<input type = password name = "pswd">
    <input type = submit value ="login" name = "login">
 </form>
-signup
+<h1>signup</h1>
 <form name = "signup" action="/addbook" method = "post">
 	email<input type = text name = "email">
 	name<input type = text name = "name">
 	phone<input type  = text name = "phno">
 	location<input type  = text name = "location">
 	password<input type = password name = "pswd">
-   <input type = submit value ="signup" id = "signup">
+   <input type = submit value ="signup" name="signup">
 </form>
 </body>
 </html>
