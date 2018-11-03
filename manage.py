@@ -15,11 +15,7 @@ def home(bookname = None, no = None):
 	cur = conn.cursor()
 	if no == None:
 		return render_template('home.html')
-		'''elif(bookname != None and no = None):
-		cur.execute("SELECT  * from book where name =?",(bookname,))
-		ReqBook = cur.fetchall()
-		conn.close()
-		return render_template("home.html")'''
+		
 	else:
 		#To dispaly full details of book
 		cur.execute("SELECT  * from book where no =?",(no,))
@@ -31,17 +27,7 @@ def signlog():
 	return render_template("signlog.html")
 @app.route("/addbook", methods =['POST','GET'])
 def addbook( ):
-	
-	'''if 'em' in session:
-		em = session['em']
-		password = session['password']
-		msg = " "
-		return render_template("profile.html",msg = msg)
-		profile.html has the information of all of user's books they need to sell
-	else:
-		'''
-		
-	conn = sqlite3.connect('book.db')
+        conn = sqlite3.connect('book.db')
 	cur = conn.cursor()
 	if 'signup' in request.form.keys():
 		name = request.form['name']  
@@ -68,13 +54,7 @@ def addbook( ):
 		else:
 			msg = "login succesful"
 			return render_template("profile.html",msg = msg, login_query = login_query)
-			
-			
-		
-			#conn.rollback();
-
-		
-			
+		        #conn.rollback();
 			conn.close()				
 @app.route("/book", methods =['POST','GET'])
 def book():
@@ -94,30 +74,6 @@ def book():
 			conn.commit();
 			return render_template('profile.html', msg = msg)
 
-			'''elif 'fiction' in form.request:
-				book_name = request.form['book_name']				
-				author = request.form['author']
-				price = request.form['price']
-				description = request.form['description']
-				booktype = request.form['booktype']
-				
-				cur.execute("INSERT INTO ficbook VALUES(?,?,?,?)",(book_name,author,price,description,booktype))
-				conn.commit();
-				msg = "Book added"
-				return render_template('profile.html', msg = msg)
-
-
-			else:
-				book_name = request.form['book_name']				
-				author = request.form['author']
-				price = request.form['price']
-				description = request.form['description']
-				booktype = request.form['booktype']
-				
-				cur.execute("INSERT INTO nficbook VALUES(?,?,?,?)",(book_name,author,price,description,booktype))
-				conn.commit();
-				msg = "Book added"
-				return render_template('profile.html', msg = msg)'''
 		except:
 			conn.rollback()
 		finally:
@@ -131,11 +87,7 @@ def search():
 		cur = conn.cursor()
 		cur.execute("SELECT * FROM book WHERE name = ? ",(searchBook,))
 		res= cur.fetchall()
-		'''cur.execute("SELECT * FROM ficbook WHERE ficbook.bookname = ? ",(searchBook,))
-		ficres=cur.fetchall()
-		cur.execute("SELECT * FROM nficbook WHERE nficbook.bookname = ? ",(searchBook,))
-		nficres = cur.fetchall()'''
-		
+			
 		if len(res) == 0 :
 			msg = "No results found :("
 			return render_template("home.html",msg=msg)
